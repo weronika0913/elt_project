@@ -84,7 +84,7 @@ class CoinDataExtractor:
 
             
     #This method returns the last load date from DuckDB if it exists
-    # If it doesn't exist, it returns the start date of the data extraction
+    # If no data exists, it provides information to perform the initial load.
     def get_last_load(self):
         db_path = os.path.join("data","historical_bitcoin.db")
         conn = duckdb.connect(db_path)
