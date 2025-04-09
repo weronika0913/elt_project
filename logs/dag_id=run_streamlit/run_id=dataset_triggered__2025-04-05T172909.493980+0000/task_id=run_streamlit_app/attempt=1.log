@@ -1,0 +1,48 @@
+[2025-04-05T17:29:10.003+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-04-05T17:29:10.052+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: run_streamlit.run_streamlit_app dataset_triggered__2025-04-05T17:29:09.493980+00:00 [queued]>
+[2025-04-05T17:29:10.061+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: run_streamlit.run_streamlit_app dataset_triggered__2025-04-05T17:29:09.493980+00:00 [queued]>
+[2025-04-05T17:29:10.062+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-04-05T17:29:10.079+0000] {taskinstance.py:2330} INFO - Executing <Task(BashOperator): run_streamlit_app> on 2025-04-05 17:29:09.493980+00:00
+[2025-04-05T17:29:10.087+0000] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=333) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-04-05T17:29:10.088+0000] {standard_task_runner.py:63} INFO - Started process 334 to run task
+[2025-04-05T17:29:10.087+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'run_streamlit', 'run_streamlit_app', 'dataset_triggered__2025-04-05T17:29:09.493980+00:00', '--job-id', '6', '--raw', '--subdir', 'DAGS_FOLDER/run_streamlit.py', '--cfg-path', '/tmp/tmp9y56536b']
+[2025-04-05T17:29:10.090+0000] {standard_task_runner.py:91} INFO - Job 6: Subtask run_streamlit_app
+[2025-04-05T17:29:10.113+0000] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/settings.py:195 DeprecationWarning: The sql_alchemy_conn option in [core] has been moved to the sql_alchemy_conn option in [database] - the old setting has been used, but please update your config.
+[2025-04-05T17:29:10.161+0000] {task_command.py:426} INFO - Running <TaskInstance: run_streamlit.run_streamlit_app dataset_triggered__2025-04-05T17:29:09.493980+00:00 [running]> on host de3d8b486e6c
+[2025-04-05T17:29:10.263+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='run_streamlit' AIRFLOW_CTX_TASK_ID='run_streamlit_app' AIRFLOW_CTX_EXECUTION_DATE='2025-04-05T17:29:09.493980+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='dataset_triggered__2025-04-05T17:29:09.493980+00:00'
+[2025-04-05T17:29:10.264+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2025-04-05T17:29:10.280+0000] {subprocess.py:63} INFO - Tmp dir root location: /tmp
+[2025-04-05T17:29:10.281+0000] {subprocess.py:75} INFO - Running command: ['/usr/bin/bash', '-c', 'streamlit run /opt/***/visualization/dashboard.py --server.enableWebsocketCompression=false --server.enableCORS=false']
+[2025-04-05T17:29:10.290+0000] {subprocess.py:86} INFO - Output:
+[2025-04-05T17:29:11.407+0000] {subprocess.py:93} INFO - 2025-04-05 17:29:11.406
+[2025-04-05T17:29:11.407+0000] {subprocess.py:93} INFO - Warning: the config option 'server.enableCORS=false' is not compatible with 'server.enableXsrfProtection=true'.
+[2025-04-05T17:29:11.408+0000] {subprocess.py:93} INFO - As a result, 'server.enableCORS' is being overridden to 'true'.
+[2025-04-05T17:29:11.409+0000] {subprocess.py:93} INFO - 
+[2025-04-05T17:29:11.409+0000] {subprocess.py:93} INFO - More information:
+[2025-04-05T17:29:11.410+0000] {subprocess.py:93} INFO - In order to protect against CSRF attacks, we send a cookie with each request.
+[2025-04-05T17:29:11.410+0000] {subprocess.py:93} INFO - To do so, we must specify allowable origins, which places a restriction on
+[2025-04-05T17:29:11.411+0000] {subprocess.py:93} INFO - cross-origin resource sharing.
+[2025-04-05T17:29:11.411+0000] {subprocess.py:93} INFO - 
+[2025-04-05T17:29:11.411+0000] {subprocess.py:93} INFO - If cross origin resource sharing is required, please disable server.enableXsrfProtection.
+[2025-04-05T17:29:11.412+0000] {subprocess.py:93} INFO - 
+[2025-04-05T17:29:11.412+0000] {subprocess.py:93} INFO - 
+[2025-04-05T17:29:11.413+0000] {subprocess.py:93} INFO - Collecting usage statistics. To deactivate, set browser.gatherUsageStats to false.
+[2025-04-05T17:29:11.413+0000] {subprocess.py:93} INFO - 
+[2025-04-05T17:29:11.745+0000] {subprocess.py:93} INFO - 
+[2025-04-05T17:29:11.746+0000] {subprocess.py:93} INFO -   You can now view your Streamlit app in your browser.
+[2025-04-05T17:29:11.747+0000] {subprocess.py:93} INFO - 
+[2025-04-05T17:29:11.747+0000] {subprocess.py:93} INFO -   Local URL: http://localhost:8501
+[2025-04-05T17:29:11.748+0000] {subprocess.py:93} INFO -   Network URL: http://172.22.0.5:8501
+[2025-04-05T17:29:11.748+0000] {subprocess.py:93} INFO -   External URL: http://194.110.77.14:8501
+[2025-04-05T17:29:11.748+0000] {subprocess.py:93} INFO - 
+[2025-04-05T18:29:11.969+0000] {local_task_job_runner.py:304} WARNING - DagRun timed out after 1:00:02.222146.
+[2025-04-05T18:29:17.027+0000] {local_task_job_runner.py:304} WARNING - DagRun timed out after 1:00:07.280111.
+[2025-04-05T18:29:17.027+0000] {local_task_job_runner.py:310} WARNING - State of this instance has been externally set to skipped. Terminating instance.
+[2025-04-05T18:29:17.028+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-04-05T18:29:17.030+0000] {process_utils.py:132} INFO - Sending 15 to group 334. PIDs of all processes in the group: [335, 334]
+[2025-04-05T18:29:17.030+0000] {process_utils.py:87} INFO - Sending the signal 15 to group 334
+[2025-04-05T18:29:17.031+0000] {taskinstance.py:2611} ERROR - Received SIGTERM. Terminating subprocesses.
+[2025-04-05T18:29:17.032+0000] {subprocess.py:104} INFO - Sending SIGTERM signal to process group
+[2025-04-05T18:29:17.032+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-04-05T18:29:17.126+0000] {process_utils.py:80} INFO - Process psutil.Process(pid=334, status='terminated', exitcode=0, started='17:29:09') (334) terminated with exit code 0
+[2025-04-05T18:29:17.262+0000] {process_utils.py:80} INFO - Process psutil.Process(pid=335, status='terminated', started='17:29:09') (335) terminated with exit code None

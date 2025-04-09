@@ -1,0 +1,67 @@
+[2025-04-09T09:39:42.648+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-04-09T09:39:42.685+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: run_streamlit.run_streamlit_app dataset_triggered__2025-04-09T09:39:42.153095+00:00 [queued]>
+[2025-04-09T09:39:42.693+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: run_streamlit.run_streamlit_app dataset_triggered__2025-04-09T09:39:42.153095+00:00 [queued]>
+[2025-04-09T09:39:42.694+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-04-09T09:39:42.707+0000] {taskinstance.py:2330} INFO - Executing <Task(BashOperator): run_streamlit_app> on 2025-04-09 09:39:42.153095+00:00
+[2025-04-09T09:39:42.713+0000] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=343) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-04-09T09:39:42.714+0000] {standard_task_runner.py:63} INFO - Started process 344 to run task
+[2025-04-09T09:39:42.713+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'run_streamlit', 'run_streamlit_app', 'dataset_triggered__2025-04-09T09:39:42.153095+00:00', '--job-id', '6', '--raw', '--subdir', 'DAGS_FOLDER/run_streamlit.py', '--cfg-path', '/tmp/tmplk8solon']
+[2025-04-09T09:39:42.715+0000] {standard_task_runner.py:91} INFO - Job 6: Subtask run_streamlit_app
+[2025-04-09T09:39:42.735+0000] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/settings.py:195 DeprecationWarning: The sql_alchemy_conn option in [core] has been moved to the sql_alchemy_conn option in [database] - the old setting has been used, but please update your config.
+[2025-04-09T09:39:42.776+0000] {task_command.py:426} INFO - Running <TaskInstance: run_streamlit.run_streamlit_app dataset_triggered__2025-04-09T09:39:42.153095+00:00 [running]> on host a8d03476fcec
+[2025-04-09T09:39:42.874+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='run_streamlit' AIRFLOW_CTX_TASK_ID='run_streamlit_app' AIRFLOW_CTX_EXECUTION_DATE='2025-04-09T09:39:42.153095+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='dataset_triggered__2025-04-09T09:39:42.153095+00:00'
+[2025-04-09T09:39:42.875+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2025-04-09T09:39:42.889+0000] {subprocess.py:63} INFO - Tmp dir root location: /tmp
+[2025-04-09T09:39:42.890+0000] {subprocess.py:75} INFO - Running command: ['/usr/bin/bash', '-c', 'streamlit run /opt/***/visualization/dashboard.py --server.enableWebsocketCompression=false --server.enableCORS=false --server.port=8501']
+[2025-04-09T09:39:42.899+0000] {subprocess.py:86} INFO - Output:
+[2025-04-09T09:39:43.927+0000] {subprocess.py:93} INFO - 2025-04-09 09:39:43.927
+[2025-04-09T09:39:43.928+0000] {subprocess.py:93} INFO - Warning: the config option 'server.enableCORS=false' is not compatible with 'server.enableXsrfProtection=true'.
+[2025-04-09T09:39:43.928+0000] {subprocess.py:93} INFO - As a result, 'server.enableCORS' is being overridden to 'true'.
+[2025-04-09T09:39:43.928+0000] {subprocess.py:93} INFO - 
+[2025-04-09T09:39:43.929+0000] {subprocess.py:93} INFO - More information:
+[2025-04-09T09:39:43.929+0000] {subprocess.py:93} INFO - In order to protect against CSRF attacks, we send a cookie with each request.
+[2025-04-09T09:39:43.930+0000] {subprocess.py:93} INFO - To do so, we must specify allowable origins, which places a restriction on
+[2025-04-09T09:39:43.930+0000] {subprocess.py:93} INFO - cross-origin resource sharing.
+[2025-04-09T09:39:43.930+0000] {subprocess.py:93} INFO - 
+[2025-04-09T09:39:43.931+0000] {subprocess.py:93} INFO - If cross origin resource sharing is required, please disable server.enableXsrfProtection.
+[2025-04-09T09:39:43.931+0000] {subprocess.py:93} INFO - 
+[2025-04-09T09:39:43.931+0000] {subprocess.py:93} INFO - 
+[2025-04-09T09:39:43.932+0000] {subprocess.py:93} INFO - Collecting usage statistics. To deactivate, set browser.gatherUsageStats to false.
+[2025-04-09T09:39:43.932+0000] {subprocess.py:93} INFO - 
+[2025-04-09T09:39:44.279+0000] {subprocess.py:93} INFO - 
+[2025-04-09T09:39:44.279+0000] {subprocess.py:93} INFO -   You can now view your Streamlit app in your browser.
+[2025-04-09T09:39:44.280+0000] {subprocess.py:93} INFO - 
+[2025-04-09T09:39:44.280+0000] {subprocess.py:93} INFO -   Local URL: http://localhost:8501
+[2025-04-09T09:39:44.281+0000] {subprocess.py:93} INFO -   Network URL: http://172.22.0.6:8501
+[2025-04-09T09:39:44.281+0000] {subprocess.py:93} INFO -   External URL: http://194.110.77.14:8501
+[2025-04-09T09:39:44.281+0000] {subprocess.py:93} INFO - 
+[2025-04-09T09:40:49.105+0000] {local_task_job_runner.py:124} ERROR - Received SIGTERM. Terminating subprocesses
+[2025-04-09T09:40:49.113+0000] {process_utils.py:132} INFO - Sending 15 to group 344. PIDs of all processes in the group: [345, 344]
+[2025-04-09T09:40:49.114+0000] {process_utils.py:87} INFO - Sending the signal 15 to group 344
+[2025-04-09T09:40:49.115+0000] {taskinstance.py:2611} ERROR - Received SIGTERM. Terminating subprocesses.
+[2025-04-09T09:40:49.116+0000] {subprocess.py:104} INFO - Sending SIGTERM signal to process group
+[2025-04-09T09:40:49.117+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-04-09T09:40:49.157+0000] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/bash.py", line 234, in execute
+    result = self.subprocess_hook.run_command(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/hooks/subprocess.py", line 91, in run_command
+    for raw_line in iter(self.sub_process.stdout.readline, b""):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 2613, in signal_handler
+    raise AirflowTaskTerminated("Task received SIGTERM signal")
+airflow.exceptions.AirflowTaskTerminated: Task received SIGTERM signal
+[2025-04-09T09:40:49.166+0000] {taskinstance.py:1206} INFO - Marking task as UP_FOR_RETRY. dag_id=run_streamlit, task_id=run_streamlit_app, run_id=dataset_triggered__2025-04-09T09:39:42.153095+00:00, execution_date=20250409T093942, start_date=20250409T093942, end_date=20250409T094049
+[2025-04-09T09:40:49.259+0000] {process_utils.py:80} INFO - Process psutil.Process(pid=344, status='terminated', exitcode=2, started='09:39:42') (344) terminated with exit code 2
+[2025-04-09T09:40:49.634+0000] {process_utils.py:80} INFO - Process psutil.Process(pid=345, status='terminated', started='09:39:42') (345) terminated with exit code None
+[2025-04-09T09:40:49.635+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 143
+[2025-04-09T09:40:49.663+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
