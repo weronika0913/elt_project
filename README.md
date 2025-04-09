@@ -54,7 +54,7 @@ The `CoinDataExtractor` class provides several methods for fetching, uploading, 
   - This method ensures that there is a dedicated bucket in MinIO for each asset (e.g., Bitcoin), which is required for storing and managing data files.
 
 ### 4. `get_last_load()`
-- **Purpose**: Returns the date of the last data load from DuckDB, or the start date if no data exists. This helps determine the date from which new data should be loaded.
+- **Purpose**: Returns the date of the last data load from DuckDB. This helps determine the date from which new data should be loaded.
 - **Usage**:
   - This method is useful for incremental data loads, ensuring that only new data is fetched from the CoinCap API.
 
