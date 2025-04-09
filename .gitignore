@@ -4,3 +4,4 @@ app.log
 data/*
 logs/*
 !.gitkeep
+__pycache__
