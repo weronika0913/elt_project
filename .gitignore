@@ -1,2 +1,4 @@
 secrets/API_KEY
 scripts/test.py
+data/*
+app.log
