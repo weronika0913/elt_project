@@ -70,3 +70,62 @@ The `CoinDataExtractor` class provides several methods for fetching, uploading, 
 By using these methods, you can efficiently fetch, store, and load cryptocurrency data for analysis and visualization.
 
 
+# Airflow DAGs for ELT Pipeline
+
+This repository contains three Airflow DAGs used for the ELT pipeline to fetch, process, and visualize Bitcoin data.
+
+## DAGs Overview
+
+### 1. **`init_elt_pipeline`**
+
+This DAG is designed to initialize the ELT pipeline for the Bitcoin dataset. It runs once and performs the following tasks in sequence:
+
+- **Get Coin Data**: Fetches the historical Bitcoin data from the API.
+- **Create Bucket**: Creates a Minio bucket if it doesn't already exist.
+- **Upload Data to Minio**: Uploads the fetched Bitcoin data to Minio.
+- **Load Data into DuckDB**: Loads the data from Minio into DuckDB for further processing.
+
+**Task Sequence**:  
+`Get Coin Data` → `Create Bucket` → `Upload Data to Minio` → `Load Data into DuckDB`
+
+---
+
+### 2. **`run_streamlit`**
+
+This DAG is responsible for running the Streamlit app after the Bitcoin dataset has been loaded into DuckDB. It triggers the Streamlit application to visualize the dataset:
+
+- **Run Streamlit App**: Starts the Streamlit app by executing a bash command to run the `dashboard.py` file.
+
+This DAG is triggered after the `duckdb://bitcoin` dataset updated by the initialization pipeline.
+For further refresh, simply click the icon `Refresh 🔄` in the web interface.
+
+---
+
+### 3. **`elt_pipeline`**
+
+This DAG runs the ELT pipeline for daily data extraction and loading. It includes the following tasks:
+
+- **Test Last Load**: Ensures that the `get_last_load` method returns a valid string before proceeding.
+- **Get Coin Data**: Fetches the Bitcoin data starting from the last load date.
+- **Upload Data to Minio**: Uploads the fetched data to Minio.
+- **Load Data into DuckDB**: Loads the data from Minio into DuckDB.
+
+**Task Sequence**:  
+`Test Last Load` → `Get Coin Data` → `Upload Data to Minio` → `Load Data into DuckDB`
+
+This DAG is scheduled to run daily (`@daily`).
+
+---
+
+## Summary
+
+- The **`init_elt_pipeline`** DAG initializes the pipeline by fetching data, creating a bucket, uploading the data, and loading it into DuckDB.
+- The **`run_streamlit`** DAG runs the Streamlit app to visualize the data in the DuckDB.
+- The **`elt_pipeline`** DAG runs the daily ETL process to fetch new Bitcoin data, upload it to Minio, and load it into DuckDB.
+
+---
+
+This setup ensures that the ETL pipeline for the Bitcoin dataset runs efficiently, with initialization handled separately and daily updates managed by the `elt_pipeline` DAG.
+
+
+
