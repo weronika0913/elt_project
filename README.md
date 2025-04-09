@@ -17,7 +17,7 @@ graph TD
     A[CoinCap API] --> B[Airflow DAG: extract & save to MinIO]
     B --> C[Airflow DAG: load to DuckDB]
     C --> D[Streamlit Dashboard: visualize data]
-
+```
 
 ## Setup
 
