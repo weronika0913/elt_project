@@ -23,7 +23,6 @@ x-airflow-common:
     - ./data:/opt/airflow/data
     - ./visualization:/opt/airflow/visualization
     - ./logs:/opt/airflow/logs
-    - ./plugins:/opt/airflow/plugins
     - ./tests:/opt/airflow/tests
     - ./temp:/opt/airflow/temp
     - ./setup.py:/opt/airflow/setup.py
