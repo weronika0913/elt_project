@@ -1,0 +1,28 @@
+[tool.poetry]
+name = "elt project"
+version = "0.1.0"
+description = ""
+authors = ["Weronika Podyma"]
+readme = "README.md"
+packages = [
+    { include = "dags" },
+    { include = "scripts" },
+    { include = "visualization" }
+]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+duckdb = "1.1.0"
+black = "24.4.2"
+flake8 = "7.0.0"
+minio = "7.1.2"
+python-dotenv = "0.21.1"
+streamlit = "1.14.0"
+plotly = "5.9.0"
+pandas = "2.2.3"
+pendulum = "3.0.0"
+altair = "4.0.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

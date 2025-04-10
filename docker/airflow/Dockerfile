@@ -1,13 +1,26 @@
 FROM apache/airflow:2.9.2
 
-#copy files
-COPY requirements.txt /requirements.txt
+
 ENV PYTHONPATH="/opt/airflow/dags"
+
+# Install poetry
+RUN pip install poetry
+ENV PATH="${PATH}:/root/.local/bin"
+
+
+# Copy project files
 COPY dags /opt/airflow/dags
 COPY scripts /opt/airflow/scripts
 COPY setup.py /opt/airflow/setup.py
 COPY secrets /opt/airflow/secrets
 COPY data /opt/airflow/data
+COPY pyproject.toml poetry.lock /opt/airflow/
+COPY visualization /opt/airflow/visualization
+COPY README.md /opt/airflow/README.md
+
+
+# Install dependencies using Poetry
+RUN poetry install --no-interaction
 
 # set up working directory
 WORKDIR /opt/airflow
@@ -18,8 +31,4 @@ RUN chown -R airflow /opt/airflow/scripts
 
 # switch back to airflow user
 USER airflow
-
-# install dependencies
-RUN pip install --no-cache-dir -r /requirements.txt
-RUN pip install -e /opt/airflow
 

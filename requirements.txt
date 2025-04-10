@@ -3,8 +3,7 @@ black==24.4.2
 flake8==7.0.0
 minio==7.1.2
 python-dotenv==0.21.1
-pandas==2.0.0
+pandas==2.2.3
 streamlit==1.14.0
 plotly==5.9.0
-pendulum==2.1.2
--e .
+pendulum==3.0.0

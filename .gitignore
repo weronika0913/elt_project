@@ -5,3 +5,4 @@ data/*
 logs/*
 !.gitkeep
 __pycache__
+setup.py
