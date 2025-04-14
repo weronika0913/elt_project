@@ -7,3 +7,4 @@ logs/*
 __pycache__
 setup.py
 requirements.txt
+elt_pipeline.egg-info/*
