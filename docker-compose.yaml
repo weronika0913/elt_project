@@ -26,7 +26,6 @@ x-airflow-common:
     - ./tests:/opt/airflow/tests
     - ./temp:/opt/airflow/temp
     - ./setup.py:/opt/airflow/setup.py
-    - ./secrets:/opt/airflow/secrets
   user: "${AIRFLOW_UID:-50000}:${AIRFLOW_GID:-50000}"
   depends_on:
     postgres:

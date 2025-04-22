@@ -11,8 +11,6 @@ ENV PATH="${PATH}:/root/.local/bin"
 # Copy project files
 COPY dags /opt/airflow/dags
 COPY scripts /opt/airflow/scripts
-COPY setup.py /opt/airflow/setup.py
-COPY secrets /opt/airflow/secrets
 COPY data /opt/airflow/data
 COPY pyproject.toml poetry.lock /opt/airflow/
 COPY visualization /opt/airflow/visualization
