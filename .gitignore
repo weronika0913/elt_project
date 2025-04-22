@@ -8,3 +8,7 @@ __pycache__
 setup.py
 requirements.txt
 elt_pipeline.egg-info/*
+example_bitcoin
+all_assets
+one_asset
+tables-dim-fact.txt
