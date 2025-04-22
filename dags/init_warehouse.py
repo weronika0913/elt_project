@@ -32,18 +32,18 @@ with DAG('init_warehouse',
     
     create_tables = PythonOperator(
         task_id = 'create_tables',
-        python_callable =  initialize_warehouse.create_tables()
+        python_callable =  initialize_warehouse.create_tables
     )
 
     fill_out_date_table = PythonOperator(
         task_id = 'initialize_date_table',
-        python_callable = initialize_warehouse.insert_into_date_table()
+        python_callable = initialize_warehouse.insert_into_date_table
     )
     
 
     fill_out_asset_table = PythonOperator(
         task_id = 'initialize_asset_table',
-        python_callable = fetch_all_assets.load_assets()
+        python_callable = fetch_all_assets.load_assets
     )
 
 create_tables >> fill_out_date_table >> fill_out_asset_table

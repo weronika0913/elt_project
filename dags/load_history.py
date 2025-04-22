@@ -6,7 +6,7 @@ from airflow.operators.python import PythonOperator
 from datetime import datetime
 import sys
 import os
-from airflow.decorator import task
+from airflow.decorators import task
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../scripts')))
 #import functions from scripts
