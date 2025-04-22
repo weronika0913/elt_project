@@ -46,26 +46,23 @@ def create_tables():
                PRIMARY KEY(asset_id, date_id)
                );
                    
-          CREATE OR REPLACE TABLE fact_coin_metrics
+          CREATE OR REPLACE TABLE fact_coin_metrics (
                metric_id UUID,
                asset_id text,
-               date_id date
+               date_id date,
                supply decimal(18,2),
                maxSupply decimal(18,2),
                marketCapUsd decimal (18,2),
                priceUsd decimal (18,2),
-               load_timestamp,
-               
-                   
-               
-
-               
+               load_timestamp timestamp
+               )
           ''') 
           logger.info("Tables dim_assets, dim_date, history_price has been successfully created")
 
           conn.sql()
      except Exception as e:
           logger.error(f"Error during creating dim_assets, dim_date, history_price: {e}")
+          raise
      finally:
           conn.close()
 
@@ -90,6 +87,6 @@ def insert_into_date_table():
           logger.info("Data has been succesfully loaded into dim_date")
      except Exception as e:
           logger.error(f"Error inserting into dim_date: {e}")
-
-create_tables()
-insert_into_date_table()
+          raise
+     finally:
+          conn.close()

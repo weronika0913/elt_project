@@ -73,6 +73,7 @@ class CoinDataExtractor:
                 logger.info(f"Data successfully fetched for {self.asset_id}")
             except Exception as e:
                 logger.error(f"Error fetching for {self.asset_id}") 
+                raise
 
 
 
@@ -88,6 +89,7 @@ class CoinDataExtractor:
                 logger.info(f"File uploaded to Minio successfully")
             except Exception as e:
                 logger.error(f"Error uploading file to Minio: {e}")
+                raise
         
     #This method create a bucket in minio if it doesn't exist
     def create_bucket(self): 
@@ -98,6 +100,7 @@ class CoinDataExtractor:
             logger.info(f"Succesfully bucket {self.asset_id} was created")
         except Exception as e:
             logger.error(f"Error creating bucket {self.asset_id}")
+            raise
     
     
 
