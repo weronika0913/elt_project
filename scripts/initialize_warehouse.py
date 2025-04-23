@@ -58,8 +58,6 @@ def create_tables():
                )
           ''') 
           logger.info("Tables dim_assets, dim_date, history_price has been successfully created")
-
-          conn.sql()
      except Exception as e:
           logger.error(f"Error during creating dim_assets, dim_date, history_price: {e}")
           raise

@@ -56,6 +56,7 @@ def load_assets():
         logger.info("Data succesfully loaded into dim_assets")
     except Exception as e:
         logger.error(f"Error during load data into dim_assets: {e}")
+        raise
     finally:
         conn.close()
 
