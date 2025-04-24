@@ -24,8 +24,8 @@ graph TD
 To run the application, please follow these steps:
 
 1. Create a folder named `secrets` in the root directory of the project.
-2. Inside the `secrets` folder, create a file named `Api_Key` containing the generated API key from CoinApi.
-3. Generate an appropriate API key for the application integration and place it inside the `Api_Key` file.
+2. Inside the `secrets` folder, create a file named `Api_Key` containing the generated API key from CoinCap.
+3. Generate an appropriate API key via this link https://pro.coincap.io/signin for the application integration and place it inside the `Api_Key` file.
 
 The `secrets/Api_Key` file is not included in the repository to ensure the security of API keys.
 
