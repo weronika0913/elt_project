@@ -15,7 +15,7 @@ from scripts import fetch_all_assets
 
 
 """"
- This DAG is designed to run once and initialize the ELT pipeline for the warehouse.
+ This DAG is designed to run once and initialize tables for the database.
 """
 
 default_args = {

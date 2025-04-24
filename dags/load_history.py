@@ -66,10 +66,10 @@ with DAG('load_history',
         upload = upload_file_to_minio.override(task_id=f"upload_{coin}").expand(coin=[coin])
         load = load_data_from_minio_to_duckdb.override(task_id=f"load_{coin}").expand(coin=[coin])
 
-        # Ustawiamy sekwencję tylko dla jednego coina
+        # Sequence for one coin
         chain(create, process, upload, load)
         load_tasks.append(load)
 
-    # Sekwencja dla loadów — ręczne powiązanie jednego po drugim
+    # Sequence for loads - manual linking one by one
         for i in range(len(load_tasks) - 1):
             load_tasks[i] >> load_tasks[i + 1]

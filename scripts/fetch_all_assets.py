@@ -37,7 +37,7 @@ def load_assets():
     df_filtered.loc[:,'start_date'] = datetime.now()
 
 
-    db_path = os.path.join('data','historical_bitcoin.db')
+    db_path = os.path.join('data','CoinCap.db')
     conn = duckdb.connect(db_path)
     try:
         conn.sql('''
@@ -82,7 +82,7 @@ def scd2():
     new_data['end_date'] = '9999-12-31'
     new_data['is_current'] = True
 
-    db_path = os.path.join('data','historical_bitcoin.db')
+    db_path = os.path.join('data','CoinCap.db')
     conn = duckdb.connect(db_path)
     existing = conn.sql('SELECT * FROM dim_assets WHERE is_current = TRUE').fetchdf()
     for _, new_row in new_data.iterrows:

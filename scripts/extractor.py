@@ -110,7 +110,7 @@ class CoinDataExtractor:
     # #This method returns the last load date from DuckDB if it exists
     # # If no data exists, it provides information to perform the initial load.
     # def get_last_load(self):
-    #     db_path = os.path.join("data","historical_bitcoin.db")
+    #     db_path = os.path.join("data","CoinCap.db")
     #     conn = duckdb.connect(db_path)
     #     date_df = conn.execute("SELECT MAX(date_id) FROM history_price").fetchdf()
     #     try:
@@ -128,7 +128,7 @@ class CoinDataExtractor:
  
     
     #This method loads the data from Minio to DuckDB
-    def load_data_from_minio_to_duckdb(self, db_name: str = "historical_bitcoin.db"):
+    def load_data_from_minio_to_duckdb(self, db_name: str = "CoinCap.db"):
         minio_client = get_minio_client()
         #file_names=[['binance-coin-2024','binance-coin-2025']]
         for file_list in self.file_names:

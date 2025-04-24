@@ -6,7 +6,7 @@ from logger_config import setup_logger
 logger = setup_logger(__name__)
 
 def create_tables():
-     db_path = os.path.join("data","historical_bitcoin.db")
+     db_path = os.path.join("data","CoinCap.db")
      conn = duckdb.connect(db_path)
      try:
           conn.sql('''
@@ -65,7 +65,7 @@ def create_tables():
           conn.close()
 
 def insert_into_date_table():
-     db_path = os.path.join("data","historical_bitcoin.db")
+     db_path = os.path.join("data","CoinCap.db")
      conn = duckdb.connect(db_path)
 
      date_range = pd.date_range('2024-01-01', '2030-12-31', freq='h')
