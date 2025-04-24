@@ -7,8 +7,10 @@ logs/*
 __pycache__
 setup.py
 requirements.txt
-elt_pipeline.egg-info/*
-tables-dim-fact.txt
-all_assets
+elt_pipeline.egg-info
 example_bitcoin
+all_assets
 one_asset
+tables-dim-fact.txt
+visualization/dashboard.py
+README.md
