@@ -70,9 +70,9 @@ class CoinDataExtractor:
                     dict_writer = csv.DictWriter(file,fieldnames=keys)
                     dict_writer.writeheader()
                     dict_writer.writerows(assets)
-                logger.info(f"Data successfully fetched for {self.asset_id}")
+                logger.info(f"Data successfully fetched for {self.asset_id}, year: {year}")
             except Exception as e:
-                logger.error(f"Error fetching for {self.asset_id}") 
+                logger.error(f"Error fetching for {self.asset_id}, year: {year}") 
                 raise
 
 
@@ -81,15 +81,17 @@ class CoinDataExtractor:
     def upload_file_to_minio(self):
         minio_client = get_minio_client()
         #file_names=['ethereum-2024','ethereum-2025']
-        for file_name in self.file_names:
-            local_path = os.path.join("temp",file_name)
-            try:
-                minio_client.fput_object(self.asset_id, file_name, local_path)
-                #os.remove(local_path)
-                logger.info(f"File uploaded to Minio successfully")
-            except Exception as e:
-                logger.error(f"Error uploading file to Minio: {e}")
-                raise
+        logger.info(f"file_names = {self.file_names}")
+        for file_list in self.file_names:
+            for file_name in file_list:
+                local_path = os.path.join("temp",file_name)
+                try:
+                    minio_client.fput_object(self.asset_id, file_name, local_path)
+                    #os.remove(local_path)
+                    logger.info(f"File uploaded to Minio successfully")
+                except Exception as e:
+                    logger.error(f"Error uploading file to Minio: {e}")
+                    raise
         
     #This method create a bucket in minio if it doesn't exist
     def create_bucket(self): 
@@ -128,67 +130,71 @@ class CoinDataExtractor:
     #This method loads the data from Minio to DuckDB
     def load_data_from_minio_to_duckdb(self, db_name: str = "historical_bitcoin.db"):
         minio_client = get_minio_client()
-        #file_names=['ethereum-2024','ethereum-2025']]
-        for file_name in self.file_names:
-            try:
-                
-                local_file_path = os.path.join("temp",file_name)
-                
-                #init duckdb connection
-                db_path = os.path.join("data",db_name)
-                conn = duckdb.connect(db_path)
+        #file_names=[['binance-coin-2024','binance-coin-2025']]
+        for file_list in self.file_names:
+            logger.info(file_list)
+            for file_name in file_list:
+                try:
+                    
+                    local_file_path = os.path.join("temp",file_name)
+                    
+                    #init duckdb connection
+                    db_path = os.path.join("data",db_name)
+                    conn = duckdb.connect(db_path)
 
-                # #load file from minio
-                minio_client.fget_object(self.asset_id,file_name,local_file_path)
+                    # #load file from minio
+                    minio_client.fget_object(self.asset_id,file_name,local_file_path)
 
-                
-                list_of_variables =[self.asset_id,local_file_path]
+                    
+                    list_of_variables =[self.asset_id,local_file_path]
+                    print(list_of_variables)
 
-                #load into staging history_price
-                conn.execute("""
-                    WITH temp_csv AS (
-                        SELECT
-                            $1 as asset_id,
-                            priceUsd,
-                            time,
-                            date,
-                            current_timestamp as load_timestamp
-                        FROM read_csv($2)
-                    )
-                    INSERT INTO staging_history_price
-                    SELECT *
-                    FROM temp_csv
-                    WHERE NOT EXISTS (
-                        SELECT 1
-                        FROM staging_history_price as s
-                        WHERE s.asset_id = temp_csv.asset_id AND s.date = temp_csv.date
-                    );
-                """, list_of_variables)
-                
-                # delete data which were loaded with the same date
-                conn.execute("""
-                    DELETE FROM history_price WHERE asset_id = $1 AND date_id IN (SELECT date FROM staging_history_price WHERE asset_Id = $1)""",[self.asset_id])
-                
-                #inserting into history_price
-                conn.execute("""
-                INSERT INTO history_price
-                SELECT 
-                    stag.asset_id,
-                    dd.date_id,
-                    priceUsd,
-                    current_timestamp as load_timestamp
-                FROM staging_history_price as stag
-                JOIN dim_date as dd
-                ON dd.date_id = stag.date
-                JOIN dim_assets as da
-                ON da.asset_id = stag.asset_id
-                """)
-                conn.commit()
-                conn.close()
+                    #load into staging history_price
+                    conn.execute("""
+                        WITH temp_csv AS (
+                            SELECT
+                                $1 as asset_id,
+                                priceUsd,
+                                time,
+                                date,
+                                current_timestamp as load_timestamp
+                            FROM read_csv($2)
+                        )
+                        INSERT INTO staging_history_price
+                        SELECT *
+                        FROM temp_csv
+                        WHERE NOT EXISTS (
+                            SELECT 1
+                            FROM staging_history_price as s
+                            WHERE s.asset_id = temp_csv.asset_id AND s.date = temp_csv.date
+                        );
+                    """, list_of_variables)
 
-                #remove temporary file
-                os.remove(local_file_path)
-                logger.info(f"Data loaded successfully to history_price table")
-            except Exception as e:
-                logger.error(f"Error loading data to history_price table: {e}")
-                raise
+                    # delete data which were loaded with the same date
+                    conn.execute("""
+                        DELETE FROM history_price WHERE asset_id = $1 AND date_id IN (SELECT date FROM staging_history_price WHERE asset_Id = $1)""",[self.asset_id])
+
+                    #inserting into history_price
+                    conn.execute("""
+                    INSERT INTO history_price
+                    SELECT 
+                        stag.asset_id,
+                        dd.date_id,
+                        priceUsd,
+                        current_timestamp as load_timestamp
+                    FROM staging_history_price as stag
+                    JOIN dim_date as dd
+                    ON dd.date_id = stag.date
+                    JOIN dim_assets as da
+                    ON da.asset_id = stag.asset_id
+                    WHERE stag.asset_id = $1
+                    """,[self.asset_id])
+                    conn.commit()
+                    conn.close()
+
+                    #remove temporary file
+                    #os.remove(local_file_path)
+                    logger.info(f"Data loaded successfully from {file_name} to history_price table")
+                except Exception as e:
+                    logger.error(f"Error loading data to history_price table: {e} from {file_name}")
+                    raise

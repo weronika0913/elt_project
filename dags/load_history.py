@@ -3,6 +3,7 @@
 
 from airflow import DAG
 from airflow.operators.python import PythonOperator
+from airflow.models.baseoperator import chain
 from datetime import datetime
 import sys
 import os
@@ -30,9 +31,10 @@ with DAG('load_history',
          catchup=False) as dag:
     
     @task
-    def process_coin(coin: str):
+    def process_coin(coin: str,ti=None):
         extractor = CoinDataExtractor(coin)
         extractor.get_coin_data()
+        ti.xcom_push(key=f'file_names_{coin}', value=extractor.file_names)
     
     @task
     def create_bucket(coin: str):
@@ -40,23 +42,34 @@ with DAG('load_history',
         extractor.create_bucket()
 
     @task 
-    def upload_file_to_minio(coin: str):
+    def upload_file_to_minio(coin: str, ti=None):
+        file_names = ti.xcom_pull(key=f'file_names_{coin}')
         extractor = CoinDataExtractor(coin)
+        extractor.file_names = file_names
         extractor.upload_file_to_minio()
     
     @task 
-    def load_data_from_minio_to_duckdb(coin: str):
+    def load_data_from_minio_to_duckdb(coin: str,ti=None):
+        file_names = ti.xcom_pull(key=f'file_names_{coin}')
         extractor = CoinDataExtractor(coin)
+        extractor.file_names = file_names
         extractor.load_data_from_minio_to_duckdb()
 
 
     
     coin_list = ['binance-coin','bitcoin','ethereum']
-
+    load_tasks = []
     # Dynamic mapping 
-    create = create_bucket.expand(coin=coin_list)
-    process = process_coin.expand(coin=coin_list)
-    upload = upload_file_to_minio.expand(coin=coin_list)
-    load = load_data_from_minio_to_duckdb.expand(coin=coin_list)
+    for coin in coin_list:
+        create = create_bucket.override(task_id=f"create_{coin}").expand(coin=[coin])
+        process = process_coin.override(task_id=f"process_{coin}").expand(coin=[coin])
+        upload = upload_file_to_minio.override(task_id=f"upload_{coin}").expand(coin=[coin])
+        load = load_data_from_minio_to_duckdb.override(task_id=f"load_{coin}").expand(coin=[coin])
 
-    create >> process >> upload >> load
+        # Ustawiamy sekwencję tylko dla jednego coina
+        chain(create, process, upload, load)
+        load_tasks.append(load)
+
+    # Sekwencja dla loadów — ręczne powiązanie jednego po drugim
+        for i in range(len(load_tasks) - 1):
+            load_tasks[i] >> load_tasks[i + 1]
