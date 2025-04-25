@@ -1,5 +1,8 @@
 # ELT Pipeline with Airflow, MinIO, DuckDB and Streamlit
-The new version of the project is available here. The previous version can be found in the tags section.
+
+The updated version of the project is available here. The previous version can be found in the **tags** section.
+
+The goal of this update is to automatically and dynamically fetch historical data for multiple assets in one run. This makes the data retrieval process more efficient and scalable, while also improving the functionality of the data warehouse. It allows for easier management of larger asset datasets and better integration into the data warehouse.
 
 This project demonstrates an end-to-end ELT pipeline using the following tools:
 
@@ -32,7 +35,7 @@ The `secrets/Api_Key` file is not included in the repository to ensure the secur
 
 ---
 
-# Summary of Changes Between Old and New Code Versions for `CoinDataExtractor` class
+# Summary of Changes Between Old and New Code Versions for **CoinDataExtractor** class
 
 ## 1. Class Initialization (`__init__` method)
 - **Old version**: The class initialized with a `start_date` and interval (`h1` by default).
