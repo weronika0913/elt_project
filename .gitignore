@@ -13,4 +13,3 @@ all_assets
 one_asset
 tables-dim-fact.txt
 visualization/dashboard.py
-README.md

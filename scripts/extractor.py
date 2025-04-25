@@ -23,7 +23,7 @@ class CoinDataExtractor:
         self.url = f"https://rest.coincap.io/v3/assets/{asset_id}/history"        
 
 
-    # This method fetches the coin data from the API and saves it to a CSV file.
+    # This method fetches historical coin data from the CoinCap API for the specified years and saves it as CSV files.
     def get_coin_data(self):
         utc_zone = pytz.UTC
 
@@ -80,20 +80,19 @@ class CoinDataExtractor:
     # This method loads the data from the CSV file into Minio.
     def upload_file_to_minio(self):
         minio_client = get_minio_client()
-        #file_names=['ethereum-2024','ethereum-2025']
         logger.info(f"file_names = {self.file_names}")
         for file_list in self.file_names:
             for file_name in file_list:
                 local_path = os.path.join("temp",file_name)
                 try:
                     minio_client.fput_object(self.asset_id, file_name, local_path)
-                    #os.remove(local_path)
+                    os.remove(local_path)
                     logger.info(f"File uploaded to Minio successfully")
                 except Exception as e:
                     logger.error(f"Error uploading file to Minio: {e}")
                     raise
         
-    #This method create a bucket in minio if it doesn't exist
+    # This method creates a bucket in MinIO if it does not already exist.
     def create_bucket(self): 
         minio_client = get_minio_client()
         try:
@@ -127,10 +126,9 @@ class CoinDataExtractor:
     #         conn.close()
  
     
-    #This method loads the data from Minio to DuckDB
+    # This method downloads CSV files from MinIO and loads the data into DuckDB's staging and history tables.
     def load_data_from_minio_to_duckdb(self, db_name: str = "CoinCap.db"):
         minio_client = get_minio_client()
-        #file_names=[['binance-coin-2024','binance-coin-2025']]
         for file_list in self.file_names:
             logger.info(file_list)
             for file_name in file_list:
@@ -170,11 +168,11 @@ class CoinDataExtractor:
                         );
                     """, list_of_variables)
 
-                    # delete data which were loaded with the same date
+                    # remove records that have the same date as the currently loaded data
                     conn.execute("""
                         DELETE FROM history_price WHERE asset_id = $1 AND date_id IN (SELECT date FROM staging_history_price WHERE asset_Id = $1)""",[self.asset_id])
 
-                    #inserting into history_price
+                    # inserting into history_price
                     conn.execute("""
                     INSERT INTO history_price
                     SELECT 
@@ -193,7 +191,7 @@ class CoinDataExtractor:
                     conn.close()
 
                     #remove temporary file
-                    #os.remove(local_file_path)
+                    os.remove(local_file_path)
                     logger.info(f"Data loaded successfully from {file_name} to history_price table")
                 except Exception as e:
                     logger.error(f"Error loading data to history_price table: {e} from {file_name}")
