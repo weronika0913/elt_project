@@ -14,8 +14,7 @@ def load_assets():
 
     url = f"https://rest.coincap.io/v3/assets"
     load_dotenv()
-    with open(os.getenv("API_KEY_PATH"), "r") as f:
-        api_key = f.read().strip()
+    api_key = os.getenv("API_KEY")
     #Api token
     headers = {
         "Authorization": f"Bearer {api_key}"
