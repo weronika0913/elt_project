@@ -72,8 +72,6 @@ services:
     <<: *airflow-common
     container_name: scheduler
     command: scheduler
-    ports:
-      - 8501:8501
     healthcheck:
       test:
         [
@@ -110,3 +108,19 @@ services:
       MINIO_ROOT_USER: minio
       MINIO_ROOT_PASSWORD: minio123
     command: server --console-address ":9001" /data
+
+  streamlit:
+    build: ./docker/streamlit/Dockerfile
+    ports:
+      - "8501:8501"
+    volumes:
+      - .data:/app/data
+      - .visualization:/app/visualization
+    user: "root"
+    env_file:
+      - .env
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:8501/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3

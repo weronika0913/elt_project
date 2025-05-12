@@ -11,6 +11,4 @@ example_bitcoin
 all_assets
 one_asset
 tables-dim-fact.txt
-visualization/dashboard.py
-
 .env
