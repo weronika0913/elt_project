@@ -3,7 +3,7 @@ x-airflow-common:
   &airflow-common
   build:
     context: .
-    dockerfile: ./docker/airflow/Dockerfile
+    dockerfile: ./Dockerfile.Airflow
   environment:
     &airflow-common-env
     AIRFLOW__CORE__EXECUTOR: LocalExecutor
@@ -110,12 +110,14 @@ services:
     command: server --console-address ":9001" /data
 
   streamlit:
-    build: ./docker/streamlit/Dockerfile
+    build:
+      context: .
+      dockerfile: ./Streamlit/Dockerfile.Streamlit
     ports:
       - "8501:8501"
     volumes:
       - .data:/app/data
-      - .visualization:/app/visualization
+      - ./Streamlit/visualization:/app/visualization
     user: "root"
     env_file:
       - .env

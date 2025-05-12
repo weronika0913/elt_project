@@ -1,11 +1,13 @@
 # app/Dockerfile
 
-FROM python:3.9-slim
+FROM python:3.12-slim
 
 WORKDIR /app
 
 COPY /visualization/dashboard.py /app/visualization
 COPY data app/data
+COPY pyproject.toml /app/pyproject.toml
+COPY poetry.lock /app/poetry.lock
 
 # Install poetry
 RUN pip install poetry
