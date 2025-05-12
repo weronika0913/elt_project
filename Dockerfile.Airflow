@@ -24,8 +24,9 @@ RUN poetry install --no-interaction
 WORKDIR /opt/airflow
 
 # change owner of the directory to airflow user
-RUN chown -R airflow /opt/airflow/scripts
+# USER ROOT
+# RUN chown -R airflow /opt/airflow/scripts
 
-# switch back to airflow user
-USER airflow
+# # switch back to airflow user
+# USER airflow
 

@@ -21,7 +21,6 @@ x-airflow-common:
     - ./dags:/opt/airflow/dags
     - ./scripts:/opt/airflow/scripts
     - ./data:/opt/airflow/data
-    - ./visualization:/opt/airflow/visualization
     - ./logs:/opt/airflow/logs
     - ./tests:/opt/airflow/tests
     - ./temp:/opt/airflow/temp
@@ -116,7 +115,7 @@ services:
     ports:
       - "8501:8501"
     volumes:
-      - .data:/app/data
+      - ./data:/app/data
       - ./Streamlit/visualization:/app/visualization
     user: "root"
     env_file:

@@ -3,7 +3,6 @@ name = "elt project"
 version = "0.1.0"
 description = ""
 authors = ["Weronika Podyma"]
-readme = "README.md"
 packages = [
     { include = "dags" },
     { include = "scripts" },
