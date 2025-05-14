@@ -13,7 +13,6 @@ COPY dags /opt/airflow/dags
 COPY scripts /opt/airflow/scripts
 COPY data /opt/airflow/data
 COPY pyproject.toml poetry.lock /opt/airflow/
-COPY Streamlit/visualization /opt/airflow/visualization
 COPY README.md /opt/airflow/README.md
 
 
