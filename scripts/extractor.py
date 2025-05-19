@@ -22,18 +22,19 @@ class CoinDataExtractor:
         self.interval = interval
         self.url = f"https://rest.coincap.io/v3/assets/{asset_id}/history"        
 
+    @staticmethod
+    def get_token():
+
+        load_dotenv()
+        api_key = os.getenv("API_KEY")
+        return {
+            "Authorization": f"Bearer {api_key}"
+            }
 
     # This method fetches historical coin data from the CoinCap API for the specified years and saves it as CSV files.
     def get_coin_data(self):
         utc_zone = pytz.UTC
 
-        load_dotenv()
-        api_key = os.getenv("API_KEY")
-
-        #Api token
-        headers = {
-            "Authorization": f"Bearer {api_key}"
-        }
         self.file_names = []
         for year in range(self.start_year, self.end_date + 1):
             file_name = f"{self.asset_id}-{year}"
@@ -55,7 +56,7 @@ class CoinDataExtractor:
                 "end": end_timestamp
             }
             try:
-                response = requests.get(self.url, params=params, headers=headers)
+                response = requests.get(self.url, params=params, headers= CoinDataExtractor.get_token())
                 response.raise_for_status()
             
             except requests.exceptions.RequestException as e:
