@@ -1,6 +1,6 @@
 import requests
 import csv
-from init_minio import get_minio_client
+from old_src.init_minio import get_minio_client
 from datetime import datetime
 import os
 import pytz

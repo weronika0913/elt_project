@@ -13,3 +13,4 @@ one_asset
 tables-dim-fact.txt
 .env
 dags/run_streamlit.py
+old_src/
