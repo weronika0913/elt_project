@@ -46,11 +46,12 @@ class CoinCapExtractor:
             # Output: ['assets/bitcoin/history', 'assets/ethereum/history']           
                 """
         urls = []
-        for path in self.path_params:
-            url = self.endpoint.format(path=path)
-            urls.append(url)
-        return urls
-    
+        if self.path_params:
+            for path in self.path_params:
+                url = self.endpoint.format(path=path)
+                urls.append(url)
+            return urls
+        return [self.endpoint]
     def _full_url(self):
         """
         Combines base URL from BaseApiAuth with formatted endpoints
@@ -66,7 +67,7 @@ class CoinCapExtractor:
             full_urls.append(url)
         return full_urls
     
-    def date_conversion(self):
+    def _date_conversion(self):
         """
         Converts 'start' and 'end' date strings from the parameters dictionary to UNIX timestamps in milliseconds.
 
@@ -98,20 +99,24 @@ class CoinCapExtractor:
     def get_data(self):
         base = BaseApiAuth()
         token = base.get_token()
-        if self.params.get("start") and self.params.get("end"):
-                self.date_conversion()
+        if self.params.get("start") or self.params.get("end"):
+                self._date_conversion()
 
         responses = []
         urls = self._full_url()
-
         for url in urls:
             response = requests.get(url,params=self.params,headers=token)
-            data = response.json()
-            responses.append(data)
+            try:
+                response.raise_for_status()
+                data = response.json()
+                responses.append(data)
+            except requests.exceptions.RequestException as e:
+                ValueError(f"Error fetching data: {e} -> {url}")
+            except requests.exceptions.JSONDecodeError:
+                ValueError(f"Failed to decode JSON -> {url}")
+
         return responses
-
-
-
+    
 extractor = CoinCapExtractor(
     endpoint="v3/assets/{path}",
     path_params=["bitcoin", "ethereum"],
@@ -121,3 +126,6 @@ extractor = CoinCapExtractor(
 data = extractor.get_data()
 
 print(data)
+
+
+
