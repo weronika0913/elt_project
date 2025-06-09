@@ -5,7 +5,7 @@ description = ""
 authors = ["Weronika Podyma"]
 packages = [
     { include = "dags" },
-    { include = "scripts" },
+    { include = "src" },
     { include = "visualization" }
 ]
 
