@@ -21,11 +21,11 @@ jobs:
           poetry install
       
       - name: Run Pylint #code quality
-        run: pylint --max-line-length=120 --fail-under=8 src
+        run: poetry run pylint --max-line-length=120 --fail-under=8 src
       
       - name: Run Black #code formatter
-        run: black --line-length 120 src --check
+        run: poetry run black --line-length 120 src --check
 
       - name: Run Flake8 #style linter
-        run: flake8 --max-line-length 120 src
+        run: poetry run flake8 --max-line-length 120 src
 
