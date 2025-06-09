@@ -3,6 +3,7 @@ name = "Dashboard"
 version = "0.1.0"
 description = ""
 authors = ["Weronika Podyma"]
+package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.12"

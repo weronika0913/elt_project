@@ -5,8 +5,7 @@ description = ""
 authors = ["Weronika Podyma"]
 packages = [
     { include = "dags" },
-    { include = "src" },
-    { include = "visualization" }
+    { include = "src" }
 ]
 
 [tool.poetry.dependencies]
