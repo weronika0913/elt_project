@@ -29,3 +29,5 @@ jobs:
       - name: Run Flake8 #style linter
         run: poetry run flake8 --max-line-length 120 src
 
+      - name: Run tests
+        run: poetry run pytest --disable-warnings
